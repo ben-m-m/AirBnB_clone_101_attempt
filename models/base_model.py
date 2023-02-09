@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""class BaseModel that defines all common attributes/methods for other classes"""
+"""class BaseModel defines all common attributes/methods for other classes"""
 
 
 class BaseModel:
@@ -14,7 +14,7 @@ class BaseModel:
         if kwargs != {}:
             for k, v in kwargs.items():
                 if k == "created_at" or k == "updated_at":
-                    val = datetime.strptime(value/ "%Y-%m-%dT%H:%M:%S.%f")
+                    val = datetime.strptime(value "%Y-%m-%dT%H:%M:%S.%f")
                     setattr(self, k, v)
                     continue
                 if k != "__class__":
@@ -25,3 +25,7 @@ class BaseModel:
             self.updated_at = datetime.now()
             models.storage.new(self)
 
+    def __str__(self):
+        """returns string representation of the instance"""
+        st = "[{:s}] ({:s}) {}"
+        return st.format(type(self).__name__, self.id, self.__dict__)
